@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis.Auth.API", "Artemis.Auth.API\Artemis.Auth.API.csproj", "{F7634534-7E8D-4119-8E40-49EABC5506B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis.Auth.Domain", "Artemis.Auth.Domain\Artemis.Auth.Domain.csproj", "{F599AAB6-2F5F-48C0-8F87-3172377424B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis.Auth.Application", "Artemis.Auth.Application\Artemis.Auth.Application.csproj", "{056F8ACE-1F6D-416A-B555-88DC68759DF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis.Auth.Infrastructure", "Artemis.Auth.Infrastructure\Artemis.Auth.Infrastructure.csproj", "{E58173EF-249B-4958-838D-3DED3A12C327}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{F7634534-7E8D-4119-8E40-49EABC5506B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7634534-7E8D-4119-8E40-49EABC5506B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7634534-7E8D-4119-8E40-49EABC5506B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F599AAB6-2F5F-48C0-8F87-3172377424B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F599AAB6-2F5F-48C0-8F87-3172377424B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F599AAB6-2F5F-48C0-8F87-3172377424B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F599AAB6-2F5F-48C0-8F87-3172377424B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{056F8ACE-1F6D-416A-B555-88DC68759DF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{056F8ACE-1F6D-416A-B555-88DC68759DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{056F8ACE-1F6D-416A-B555-88DC68759DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{056F8ACE-1F6D-416A-B555-88DC68759DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E58173EF-249B-4958-838D-3DED3A12C327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E58173EF-249B-4958-838D-3DED3A12C327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E58173EF-249B-4958-838D-3DED3A12C327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E58173EF-249B-4958-838D-3DED3A12C327}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

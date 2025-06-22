@@ -17,6 +17,8 @@ packages/
 # User-specific
 *.user
 *.suo
+*.sln.docstates
+*.userosscache
 
 # macOS
 .DS_Store
@@ -31,3 +33,4 @@ secrets.json
 # Docker
 .env*
 docker-compose.override.yml
+
