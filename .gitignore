@@ -1,0 +1,33 @@
+# build outputs
+bin/
+obj/
+out/
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# NuGet packages
+*.nupkg
+packages/
+
+# User-specific
+*.user
+*.suo
+
+# macOS
+.DS_Store
+
+# test results
+TestResults/
+coverage/
+
+# secrets
+secrets.json
+
+# Docker
+.env*
+docker-compose.override.yml
