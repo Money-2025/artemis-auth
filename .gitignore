@@ -34,3 +34,6 @@ secrets.json
 .env*
 docker-compose.override.yml
 
+# Appsettings
+appsettings.Development.json
+
