@@ -3,6 +3,11 @@ bin/
 obj/
 out/
 
+# Build artifacts
+**/bin/
+**/obj/
+
+
 # Rider
 .idea/
 *.sln.iml
