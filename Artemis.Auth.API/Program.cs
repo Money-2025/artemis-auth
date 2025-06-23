@@ -2,6 +2,7 @@ using Artemis.Auth.Domain.Interfaces;
 using Artemis.Auth.Infrastructure.Data;
 using Artemis.Auth.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,29 +18,31 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 /*builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));*/
     
-    
-// 4) Validation pipeline (FluentValidation)
-/*builder.Services
-    .AddControllers()
-    .AddFluentValidation(cfg =>
-        cfg.RegisterValidatorsFromAssemblyContaining<Program>());*/
-        
-        
+
 // 5) Swagger/OpenAPI
-/*builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();*/
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo {
+        Title = "Artemis Auth API",
+        Version = "v1",
+        Description = "Authentication endpoints for Artemis"
+    });
+});
 
 var app = builder.Build();
 
 
 // 6) Middleware pipeline
-/*if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}*/
+}
 
-app.UseHttpsRedirection();
+
+app.UseRouting();
 
 // Eğer JWT Authentication:
 // app.UseAuthentication();
