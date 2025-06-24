@@ -6,27 +6,17 @@ namespace Artemis.Auth.Infrastructure.Data;
 public class AuthDbContext : DbContext
 {
     public DbSet<User> Users { get; set; } = default!;
+    public DbSet<RefreshToken> RefreshTokens { get; set; } = default!;
     
     public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
     {
     }
     
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
-
-        builder.Entity<User>(e =>
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            e.ToTable("Users");
-            e.HasKey(u => u.Id);
-            e.Property(u => u.Email)
-                .IsRequired()
-                .HasMaxLength(256);
-            e.Property(u => u.PasswordHash)
-                .IsRequired();
-            e.Property(u => u.IsActive)
-                .HasDefaultValue(true);
-        });
-    }
+            
+            base.OnModelCreating(builder);
+            builder.ApplyConfigurationsFromAssembly(typeof(AuthDbContext).Assembly);
+        }
     
 }
