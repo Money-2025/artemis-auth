@@ -49,6 +49,16 @@ namespace Artemis.Auth.Domain.Entities
             = new List<PasswordResetRequest>();
         public ICollection<RolePermission> Permissions { get; set; }
             = new List<RolePermission>();
-        // vs. ihtiyaç duydukça diğer ilişkiler...
+        public ICollection<DeviceTrust> DeviceTrusts { get; set; }
+            = new List<DeviceTrust>();
+        public ICollection<MfaBackupCode> MfaBackupCodes { get; set; }
+            = new List<MfaBackupCode>();
+        public ICollection<PasswordHistory> PasswordHistories { get; set; }
+            = new List<PasswordHistory>();
+        public ICollection<UserRole> UserRoles { get; set; }
+            = new List<UserRole>();
+        public ICollection<RolePermission> RolePermissions { get; set; }
+            = new List<RolePermission>();
+
     }
 }
