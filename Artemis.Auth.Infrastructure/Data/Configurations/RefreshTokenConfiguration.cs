@@ -7,33 +7,50 @@ namespace Artemis.Auth.Infrastructure.Data.Configurations
 {
     public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
     {
-        public void Configure(EntityTypeBuilder<RefreshToken> e)
+        public void Configure(EntityTypeBuilder<RefreshToken> builder)
         {
-            e.ToTable("RefreshTokens");
-            e.HasKey(rt => rt.Id);
+            // Tablo adı ve birincil anahtar
+            builder.ToTable("refresh_tokens");
+            builder.HasKey(rt => rt.Id);
 
-            e.Property(rt => rt.Token)
+            // Kolon ayarları
+            builder.Property(rt => rt.Token)
                 .IsRequired()
                 .HasMaxLength(200);
-            e.HasIndex(rt => rt.Token)
+            builder.HasIndex(rt => rt.Token)
                 .IsUnique();
 
-            e.Property(rt => rt.Created)
-                .HasDefaultValueSql("NOW()");
-            e.Property(rt => rt.Expires)
+            builder.Property(rt => rt.ExpiresAt)
                 .IsRequired();
 
-            e.Property(rt => rt.CreatedByIp)
+            builder.Property(rt => rt.CreatedAt)
+                .HasDefaultValueSql("now() at time zone 'utc'")
+                .IsRequired();
+
+            builder.Property(rt => rt.CreatedByIp)
                 .IsRequired()
                 .HasMaxLength(45);
 
-            e.Property(rt => rt.RevokedByIp)
+            builder.Property(rt => rt.RevokedAt);
+
+            builder.Property(rt => rt.RevokedByIp)
                 .HasMaxLength(45);
 
-            e.Property(rt => rt.RevocationReason)
+            builder.Property(rt => rt.ReplacedByToken)
+                .HasMaxLength(200);
+
+            builder.Property(rt => rt.RevocationReason)
                 .HasMaxLength(500);
 
-            // Relationship back to User is configured in UserConfiguration
+            builder.Property(rt => rt.RowVersion)
+                .IsConcurrencyToken()
+                .HasDefaultValue(1);
+
+            builder.HasOne(rt => rt.User)
+                .WithMany(u => u.RefreshTokens)
+                .HasForeignKey(rt => rt.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
+
     }
 }
