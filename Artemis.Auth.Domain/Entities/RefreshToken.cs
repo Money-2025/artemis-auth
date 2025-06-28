@@ -1,23 +1,29 @@
-namespace Artemis.Auth.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
-public class RefreshToken
+namespace Artemis.Auth.Domain.Entities
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public string Token { get; set; } = null!;
-    public DateTime Expires { get; set; }
-    public DateTime Created { get; set; } = DateTime.UtcNow;
-    public string CreatedByIp { get; set; } = null!;
+    public class RefreshToken
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
 
-    public DateTime? Revoked { get; set; }
-    public string? RevokedByIp { get; set; }
-    public string? ReplacedByToken { get; set; }
-    public string? RevocationReason { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; set; } = null!;
 
-    // Foreign key to User
-    public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
+        public string Token { get; set; } = null!;
+        public DateTimeOffset ExpiresAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+        public string CreatedByIp { get; set; } = null!;
 
-    // Convenience properties
-    public bool IsExpired => DateTime.UtcNow >= Expires;
-    public bool IsActive => Revoked == null && !IsExpired;
+        public DateTimeOffset? RevokedAt { get; set; }
+        public string? RevokedByIp { get; set; }
+        public string? ReplacedByToken { get; set; }
+        public string? RevocationReason { get; set; }
+
+        [ConcurrencyCheck]
+        public int RowVersion { get; set; }
+
+        // Convenience
+        public bool IsExpired => DateTimeOffset.UtcNow >= ExpiresAt;
+        public bool IsActive  => RevokedAt == null && !IsExpired;
+    }
 }
