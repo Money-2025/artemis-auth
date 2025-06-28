@@ -13,4 +13,10 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Helpers\" />
+      <Folder Include="Interfaces\Helpers\" />
+      <Folder Include="Services\" />
+    </ItemGroup>
+
 </Project>
