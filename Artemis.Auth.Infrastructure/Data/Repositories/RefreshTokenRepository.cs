@@ -6,42 +6,38 @@ namespace Artemis.Auth.Infrastructure.Data.Repositories;
 
 public class RefreshTokenRepository : IRefreshTokenRepository
 {
-    private readonly AuthDbContext _ctx;
+    private readonly AuthDbContext _context;
 
     public RefreshTokenRepository(AuthDbContext context)
     {
-        _ctx = context ?? throw new ArgumentNullException(nameof(context));
+        _context = context;
     }
 
     public async Task<RefreshToken?> GetByTokenAsync(string token)
     {
-        if (string.IsNullOrWhiteSpace(token))
-            throw new ArgumentException("Token must be provided", nameof(token));
-
-        return await _ctx.RefreshTokens
-            // no AsNoTracking: we may want to revoke/update it
+        return await _context.RefreshTokens
             .FirstOrDefaultAsync(rt => rt.Token == token);
     }
 
-    public async Task AddAsync(RefreshToken refreshToken)
+    public async Task<IEnumerable<RefreshToken>> GetByUserIdAsync(Guid userId)
     {
-        if (refreshToken == null) 
-            throw new ArgumentNullException(nameof(refreshToken));
-
-        await _ctx.RefreshTokens.AddAsync(refreshToken);
+        return await _context.RefreshTokens
+            .Where(rt => rt.UserId == userId)
+            .ToListAsync();
     }
 
-    public async Task UpdateAsync(RefreshToken refreshToken)
+    public async Task AddAsync(RefreshToken token)
     {
-        if (refreshToken == null) 
-            throw new ArgumentNullException(nameof(refreshToken));
-
-        _ctx.RefreshTokens.Update(refreshToken);
-        await Task.CompletedTask;
+        await _context.RefreshTokens.AddAsync(token);
     }
 
-    public async Task SaveChangesAsync()
+    public void Update(RefreshToken token)
     {
-        await _ctx.SaveChangesAsync();
+        _context.RefreshTokens.Update(token);
+    }
+
+    public void Delete(RefreshToken token)
+    {
+        _context.RefreshTokens.Remove(token);
     }
 }

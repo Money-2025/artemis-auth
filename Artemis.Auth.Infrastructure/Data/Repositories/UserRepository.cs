@@ -6,41 +6,51 @@ namespace Artemis.Auth.Infrastructure.Data.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly AuthDbContext _ctx;
+    public AuthDbContext _context { get; set; }
 
     public UserRepository(AuthDbContext context)
     {
-        _ctx = context ?? throw new ArgumentNullException(nameof(context));
+        _context = context;
     }
-
+    
     public async Task<User?> GetByIdAsync(Guid id)
     {
-        return await _ctx.Users.FindAsync(id);
+        var user = await _context.Users.FindAsync(id);
+        return user;
     }
 
-    public async Task<User?> GetByEmailAsync(string email)
+    public async Task<User?> GetByUsernameAsync(string normalizedUsername)
     {
-        return await _ctx.Users
-            .AsNoTracking()
-            .FirstOrDefaultAsync(u => u.Email == email);
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.NormalizedUsername == normalizedUsername);
+        return user;
+    }
+
+    public async Task<User?> GetByEmailAsync(string normalizedEmail)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.NormalizedEmail == normalizedEmail);
+        return user;
+    }
+
+    public async Task<IEnumerable<User>> GetAllAsync()
+    {
+       var userList = await _context.Users.ToListAsync();
+         return userList;
     }
 
     public async Task AddAsync(User user)
     {
-        if (user == null) throw new ArgumentNullException(nameof(user));
-        await _ctx.Users.AddAsync(user);
+        await _context.Users.AddAsync(user);
     }
 
     public async Task UpdateAsync(User user)
     {
-        if (user == null) throw new ArgumentNullException(nameof(user));
-        // Optionally, you can Attach if the user isn't already tracked:
-        _ctx.Users.Update(user);
-        await Task.CompletedTask;
+        _context.Users.Update(user);
     }
 
-    public async Task SaveChangesAsync()
+    public async Task DeleteAsync(User user)
     {
-        await _ctx.SaveChangesAsync();
+        _context.Users.Remove(user);
     }
 }
